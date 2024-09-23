@@ -8,106 +8,122 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ProfileScreen(),
+      title: 'Toppr UI',
+      home: HomeScreen(),
     );
   }
 }
 
-class ProfileScreen extends StatelessWidget {
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[900],
       appBar: AppBar(
-        backgroundColor: Colors.green[900],
-        elevation: 0,
-        title: Text('Profile'),
+        backgroundColor: Colors.blue,
+        title: Text('toppr'),
         actions: [
-          IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () {},
-          ),
+          Icon(Icons.notifications),
+          SizedBox(width: 10),
+          Icon(Icons.shopping_cart),
+          SizedBox(width: 10),
         ],
       ),
       body: Column(
         children: [
+          // Profile Section
           Container(
-            color: Colors.green[900],
-            padding: EdgeInsets.symmetric(vertical: 20),
-            child: Column(
+            padding: EdgeInsets.all(16),
+            color: Colors.blue,
+            child: Row(
               children: [
                 CircleAvatar(
                   radius: 40,
-                  backgroundImage: AssetImage('assets/profile_picture.png'),
+                  backgroundImage: NetworkImage(
+                      'https://via.placeholder.com/150'), // Replace with actual image URL
                 ),
-                SizedBox(height: 10),
+                SizedBox(width: 16),
                 Text(
-                  'Md Abu Ubayda',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  '+88001712346789',
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 16,
-                  ),
+                  'Wajeeha',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ],
             ),
           ),
+          // Subject Grid
           Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                ),
-              ),
-              padding: EdgeInsets.all(20),
-              child: ListView(
-                children: [
-                  _buildProfileOption(
-                    icon: Icons.person,
-                    text: 'My Profile',
-                  ),
-                  _buildProfileOption(
-                    icon: Icons.shopping_bag,
-                    text: 'My Orders',
-                  ),
-                  _buildProfileOption(
-                    icon: Icons.refresh,
-                    text: 'Refund',
-                  ),
-                  _buildProfileOption(
-                    icon: Icons.lock,
-                    text: 'Change Password',
-                  ),
-                  _buildProfileOption(
-                    icon: Icons.language,
-                    text: 'Change Language',
-                  ),
-                ],
-              ),
+            child: GridView.count(
+              crossAxisCount: 2,
+              padding: EdgeInsets.all(16),
+              children: [
+                SubjectTile(
+                    subject: 'Science', videos: 25, goals: 345, concepts: 322),
+                SubjectTile(
+                    subject: 'Mathematics',
+                    videos: 25,
+                    goals: 345,
+                    concepts: 322),
+                SubjectTile(
+                    subject: 'English', videos: 25, goals: 345, concepts: 322),
+                SubjectTile(
+                    subject: 'Logical Reasoning',
+                    videos: 25,
+                    goals: 345,
+                    concepts: 322),
+                SubjectTile(
+                    subject: 'History', videos: 25, goals: 345, concepts: 322),
+                SubjectTile(
+                    subject: 'Civic', videos: 25, goals: 345, concepts: 322),
+              ],
             ),
           ),
         ],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.check_box), label: 'Tests'),
+          BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Activities'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.bookmark), label: 'Bookmarks'),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
+        ],
+      ),
     );
   }
+}
 
-  Widget _buildProfileOption({required IconData icon, required String text}) {
-    return ListTile(
-      leading: Icon(icon, color: Colors.green),
-      title: Text(text, style: TextStyle(fontSize: 18)),
-      trailing: Icon(Icons.arrow_forward_ios),
-      onTap: () {
-        // Add navigation or action here
-      },
+class SubjectTile extends StatelessWidget {
+  final String subject;
+  final int videos;
+  final int goals;
+  final int concepts;
+
+  const SubjectTile({
+    required this.subject,
+    required this.videos,
+    required this.goals,
+    required this.concepts,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 3,
+      margin: EdgeInsets.all(8),
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(subject,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            SizedBox(height: 8),
+            Text('$videos Videos'),
+            Text('$goals Goals'),
+            Text('$concepts Concepts'),
+          ],
+        ),
+      ),
     );
   }
 }
