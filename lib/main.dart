@@ -8,67 +8,91 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Text('Profile Page'),
-          backgroundColor: Colors.purple,
-        ),
-        body: ProfilePage(),
-      ),
+      home: ProfileScreen(),
     );
   }
 }
 
-class ProfilePage extends StatelessWidget {
+class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
+    return Scaffold(
+      backgroundColor: Colors.green[900],
+      appBar: AppBar(
+        backgroundColor: Colors.green[900],
+        elevation: 0,
+        title: Text('Profile'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.more_vert),
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: Column(
         children: [
-          SizedBox(height: 20),
-          CircleAvatar(
-            radius: 50,
-            backgroundImage: NetworkImage('https://via.placeholder.com/150'),
-          ),
-          SizedBox(height: 10),
-          Text(
-            'Hi, Precious',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            'Joined Aug. 2022',
-            style: TextStyle(color: Colors.grey),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              '"The time we spend awake is precious, but so is the time we spend asleep." - LeBron James',
-              style: TextStyle(fontStyle: FontStyle.italic),
-              textAlign: TextAlign.center,
-            ),
-          ),
           Container(
-            color: Colors.purple[100],
-            padding: EdgeInsets.all(8.0),
-            margin: EdgeInsets.symmetric(horizontal: 50),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            color: Colors.green[900],
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: Column(
               children: [
-                _buildStatColumn('23', 'Completed Sessions'),
-                _buildStatColumn('94', 'Minutes Spent'),
-                _buildStatColumn('15 days', 'Longest Streak'),
+                CircleAvatar(
+                  radius: 40,
+                  backgroundImage: AssetImage('assets/profile_picture.png'),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Md Abu Ubayda',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '+88001712346789',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 16,
+                  ),
+                ),
               ],
             ),
           ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              // Add your action
-            },
-            child: Text('Share My Stats'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromARGB(255, 185, 109, 199),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                ),
+              ),
+              padding: EdgeInsets.all(20),
+              child: ListView(
+                children: [
+                  _buildProfileOption(
+                    icon: Icons.person,
+                    text: 'My Profile',
+                  ),
+                  _buildProfileOption(
+                    icon: Icons.shopping_bag,
+                    text: 'My Orders',
+                  ),
+                  _buildProfileOption(
+                    icon: Icons.refresh,
+                    text: 'Refund',
+                  ),
+                  _buildProfileOption(
+                    icon: Icons.lock,
+                    text: 'Change Password',
+                  ),
+                  _buildProfileOption(
+                    icon: Icons.language,
+                    text: 'Change Language',
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -76,24 +100,14 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _buildStatColumn(String number, String label) {
-    return Column(
-      children: [
-        Text(
-          number,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.black54,
-          ),
-        ),
-      ],
+  Widget _buildProfileOption({required IconData icon, required String text}) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.green),
+      title: Text(text, style: TextStyle(fontSize: 18)),
+      trailing: Icon(Icons.arrow_forward_ios),
+      onTap: () {
+        // Add navigation or action here
+      },
     );
   }
 }
